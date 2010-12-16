@@ -26,9 +26,15 @@ import javax.swing.JToggleButton;
 public class Main extends javax.swing.JFrame {
 
     private static LinkedList<URL> pending = new LinkedList<URL>();
+    private static LinkedList<String> output = new LinkedList<String>();
     private static LinkedList<URL> crawled = new LinkedList<URL>();
 
     public static boolean toggled = false;
+
+    // Some stats for debugging purpose
+    public static int linksAddedToPending = 0;
+    public static int linksFound = 0;
+    public static int linksTotal = 0;
     
     static {
        System.setProperty("swing.defaultlaf", "org.pushingpixels.substance.api.skin.SubstanceGeminiLookAndFeel");
@@ -57,6 +63,7 @@ public class Main extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,6 +104,9 @@ public class Main extends javax.swing.JFrame {
 
         jLabel4.setText("Crawled: 0");
         jXStatusBar1.add(jLabel4);
+
+        jLabel5.setText("crawling");
+        jXStatusBar1.add(jLabel5);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,6 +172,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private static javax.swing.JLabel jLabel3;
     private static javax.swing.JLabel jLabel4;
+    private static javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private static javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
@@ -185,7 +196,10 @@ public class Main extends javax.swing.JFrame {
     public static void addToPending(URL URL){
         
         if(!pending.contains(URL) && !crawled.contains(URL)) {
-            pending.add(URL);
+            pending.addLast(URL);
+            linksAddedToPending++;
+        } else {
+            linksFound++;
         }
     }
 
@@ -201,16 +215,25 @@ public class Main extends javax.swing.JFrame {
      * @param URL a URL to add
      */
     public static void addToCrawled(URL URL){
-        crawled.add(URL);
+        crawled.addLast(URL);
     }
 
     /**
      * Update the output.
-     * Note: needs rewrite to be able to truncate, and to fetch the latest row in the list instead
+     * Truncates the output to 9 lines, currently
      * @param line a line to add
      */
     public static void appendToOutputArea(String line) {
-        jTextArea1.setText(jTextArea1.getText()+"\n"+line);
+        if(output.size() > 9){
+            output.removeFirst();
+        }
+        output.addLast(line);
+
+        String listOutput = "";
+        for(int i = 0; i < output.size();i++){
+            listOutput = listOutput +"\n"+ output.get(i);
+        }
+        jTextArea1.setText(listOutput);
     }
 
     /**
@@ -219,5 +242,13 @@ public class Main extends javax.swing.JFrame {
     public static void updateStatus(){
         jLabel3.setText("Pending: "+pending.size());
         jLabel4.setText("Crawled: "+crawled.size());
+    }
+
+    /**
+     * Let the user know the current URL we are crawling
+     * @param current
+     */
+    public static void setCurrentlyCrawling(String current){
+        jLabel5.setText(current);
     }
 }

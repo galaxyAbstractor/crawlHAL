@@ -1,3 +1,6 @@
-Currently it is a very basic draft to a crawler. The crawler is not 100%, 
-as it seems like it gets stuck after a couple of sites, and I am too
-tired right now to fix it. Also I need to filter out images etc (we can't find text in images can we...)
+Currently it is a very basic draft to a crawler.
+
+Changes
+========
+Dec 16, 2010: Crawler doesn't get stuck anymore. Added some debug stats. URL and filetype validation needs to be made
+Dec 15, 2010: Developement started, crawler gets stuck

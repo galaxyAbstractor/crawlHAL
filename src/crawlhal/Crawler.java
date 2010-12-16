@@ -19,6 +19,8 @@ import org.jsoup.select.Elements;
  * @author vigge
  */
 public class Crawler extends SwingWorker<Void, Void> {
+    // TODO URL validation and security
+    // TODO filetype validation
     
     @Override
     protected Void doInBackground() throws Exception {
@@ -27,29 +29,45 @@ public class Crawler extends SwingWorker<Void, Void> {
         do {
             // Get the first URL in the pending list
             String url = Main.getPending().getFirst().toString();
-
+            Main.setCurrentlyCrawling(url);
             // Connect and get the links from the HTML
             Document doc = Jsoup.connect(url).userAgent("crawlHal").get();
             Elements links = doc.select("a[href]");
-
+            int size = links.size();
 
             for (Element link : links) {
-                // Make an URL of the attribute
-                URL url1 = new URL(link.attr("abs:href"));
+                
+                String linkURL = link.attr("abs:href");
 
-                if(url1 != null){
-                    // Appends the URL to the output. This needs changing
-                    Main.appendToOutputArea(url1.toString());
-                    // Add the URL to the pending list
-                    Main.addToPending(url1);
-                    // Update the status
-                    Main.updateStatus();
-                }
+                // Make sure we have an URL, otherwise we are stuck here forever
+                if(linkURL.isEmpty()) continue;
+                URL url1 = new URL(linkURL);
+                
+                // Appends the URL to the output. This needs changing
+                Main.appendToOutputArea(url1.toString());
+                // Add the URL to the pending list
+                Main.addToPending(url1);
+                // Update the status
+                Main.updateStatus();
+                Main.linksTotal++;
+                System.out.println(Main.linksTotal+" / "+size);
+                
             }
+            
             // This URL is crawled and does not need to be crawled again
             Main.addToCrawled(Main.getPending().getFirst());
             // Remove the first URL from the pending list
             Main.removeFromPending();
+
+            // Debug stuff
+            System.out.println("on "+ url+" - next: "+ Main.getPending().getFirst().toString());
+            System.out.println("Links added: "+Main.linksAddedToPending);
+            System.out.println("Links already found: "+Main.linksFound);
+            System.out.println("Total "+Main.linksAddedToPending+" of "+Main.linksTotal+" added to pending");
+            System.out.println("---");
+            Main.linksAddedToPending = 0;
+            Main.linksFound = 0;
+            Main.linksTotal = 0;
         } while((Main.getPending().size() >0) && (Main.toggled != false));
         return null;
     }
