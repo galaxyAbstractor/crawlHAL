@@ -21,14 +21,15 @@ import org.jsoup.select.Elements;
 public class Crawler extends SwingWorker<Void, Void> {
     // TODO URL validation and security
     // TODO filetype validation
+    // TODO fix korean, chinese, japanese etc characters causing it to get stuck
     
     @Override
     protected Void doInBackground() throws Exception {
         
         // Crawl and parse for links until there is no more pending URL's
         do {
-            // Get the first URL in the pending list
-            String url = Main.getPending().getFirst().toString();
+            // Get the first URL in the pending Set
+            String url = Main.getPending().iterator().next().toString();
             Main.setCurrentlyCrawling(url);
             // Connect and get the links from the HTML
             Document doc = Jsoup.connect(url).userAgent("crawlHal").get();
@@ -55,12 +56,12 @@ public class Crawler extends SwingWorker<Void, Void> {
             }
             
             // This URL is crawled and does not need to be crawled again
-            Main.addToCrawled(Main.getPending().getFirst());
+            Main.addToCrawled(new URL(url));
             // Remove the first URL from the pending list
-            Main.removeFromPending();
+            Main.removeFromPending(new URL(url));
 
             // Debug stuff
-            System.out.println("on "+ url+" - next: "+ Main.getPending().getFirst().toString());
+            System.out.println("on "+ url+" - next: "+ url);
             System.out.println("Links added: "+Main.linksAddedToPending);
             System.out.println("Links already found: "+Main.linksFound);
             System.out.println("Total "+Main.linksAddedToPending+" of "+Main.linksTotal+" added to pending");

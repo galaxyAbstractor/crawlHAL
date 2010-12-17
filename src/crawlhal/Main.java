@@ -13,6 +13,7 @@ package crawlhal;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,9 +26,9 @@ import javax.swing.JToggleButton;
  */
 public class Main extends javax.swing.JFrame {
 
-    private static LinkedList<URL> pending = new LinkedList<URL>();
+    private static HashSet<URL> pending = new HashSet<URL>();
     private static LinkedList<String> output = new LinkedList<String>();
-    private static LinkedList<URL> crawled = new LinkedList<URL>();
+    private static HashSet<URL> crawled = new HashSet<URL>();
 
     public static boolean toggled = false;
 
@@ -185,7 +186,7 @@ public class Main extends javax.swing.JFrame {
      *
      * @return LinkedList<URL> a linked list with the URLs to crawl
      */
-    public static LinkedList<URL> getPending(){
+    public static HashSet<URL> getPending(){
         return pending;
     }
 
@@ -195,8 +196,8 @@ public class Main extends javax.swing.JFrame {
      */
     public static void addToPending(URL URL){
         
-        if(!pending.contains(URL) && !crawled.contains(URL)) {
-            pending.addLast(URL);
+        if(!crawled.contains(URL)) {
+            pending.add(URL);
             linksAddedToPending++;
         } else {
             linksFound++;
@@ -206,8 +207,8 @@ public class Main extends javax.swing.JFrame {
     /**
      * Remove first object
      */
-    public static void removeFromPending(){
-        pending.remove(0);
+    public static void removeFromPending(URL url){
+        pending.remove(url);
     }
 
     /**
@@ -215,7 +216,7 @@ public class Main extends javax.swing.JFrame {
      * @param URL a URL to add
      */
     public static void addToCrawled(URL URL){
-        crawled.addLast(URL);
+        crawled.add(URL);
     }
 
     /**
