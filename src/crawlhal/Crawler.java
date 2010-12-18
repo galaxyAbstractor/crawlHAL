@@ -5,6 +5,7 @@
 
 package crawlhal;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.SwingWorker;
 import org.jsoup.Jsoup;
@@ -19,9 +20,6 @@ import org.jsoup.select.Elements;
  * @author vigge
  */
 public class Crawler extends SwingWorker<Void, Void> {
-    // TODO URL validation and security
-    // TODO filetype validation
-    // TODO fix korean, chinese, japanese etc characters causing it to get stuck
     
     @Override
     protected Void doInBackground() throws Exception {
@@ -42,8 +40,34 @@ public class Crawler extends SwingWorker<Void, Void> {
 
                 // Make sure we have an URL, otherwise we are stuck here forever
                 if(linkURL.isEmpty()) continue;
-                URL url1 = new URL(linkURL);
-                
+
+                // Filter out some known filetypes, we do not wish to crawl these
+                if(linkURL.endsWith("jpg")  ||
+                   linkURL.endsWith("jpeg") ||
+                   linkURL.endsWith("png")  ||
+                   linkURL.endsWith("bmp")  ||
+                   linkURL.endsWith("zip")  ||
+                   linkURL.endsWith("rar")  ||
+                   linkURL.endsWith("tar")  ||
+                   linkURL.endsWith("exe")  ||
+                   linkURL.endsWith("jar")  ||
+                   linkURL.endsWith("msi")  ||
+                   linkURL.endsWith("css")  ||
+                   linkURL.endsWith("txt")  ||
+                   linkURL.endsWith("#")) {
+                    Main.linksFound++;
+                    Main.linksTotal++;
+                    continue;
+                }
+
+                URL url1;
+                try {
+                    url1 = new URL(linkURL);
+                } catch(MalformedURLException e){
+                    System.out.println("Malformed URL");
+                    continue;
+                }
+
                 // Appends the URL to the output. This needs changing
                 Main.appendToOutputArea(url1.toString());
                 // Add the URL to the pending list
@@ -51,7 +75,7 @@ public class Crawler extends SwingWorker<Void, Void> {
                 // Update the status
                 Main.updateStatus();
                 Main.linksTotal++;
-                System.out.println(Main.linksTotal+" / "+size);
+                
                 
             }
             
@@ -63,7 +87,7 @@ public class Crawler extends SwingWorker<Void, Void> {
             // Debug stuff
             System.out.println("on "+ url+" - next: "+ url);
             System.out.println("Links added: "+Main.linksAddedToPending);
-            System.out.println("Links already found: "+Main.linksFound);
+            System.out.println("Links already found or invalid: "+Main.linksFound);
             System.out.println("Total "+Main.linksAddedToPending+" of "+Main.linksTotal+" added to pending");
             System.out.println("---");
             Main.linksAddedToPending = 0;

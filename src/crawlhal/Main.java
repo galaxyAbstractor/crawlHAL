@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 
 /**
@@ -54,84 +55,120 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToolBar1 = new javax.swing.JToolBar();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jXStatusBar1 = new org.jdesktop.swingx.JXStatusBar();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        urlToolBar = new javax.swing.JToolBar();
+        urlLabel = new javax.swing.JLabel();
+        urlField = new javax.swing.JTextField();
+        crawlToggleButton = new javax.swing.JToggleButton();
+        fillerLabel = new javax.swing.JLabel();
+        outputScrollPane = new javax.swing.JScrollPane();
+        outputTextArea = new javax.swing.JTextArea();
+        statusBar = new org.jdesktop.swingx.JXStatusBar();
+        statusLabel = new javax.swing.JLabel();
+        pendingLabel = new javax.swing.JLabel();
+        crawledLabel = new javax.swing.JLabel();
+        crawlingLabel = new javax.swing.JLabel();
+        menuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        newMenuItem = new javax.swing.JMenuItem();
+        openMenuItem = new javax.swing.JMenuItem();
+        saveMenuItem = new javax.swing.JMenuItem();
+        fileMenuSeparator1 = new javax.swing.JPopupMenu.Separator();
+        closeMenuItem = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
+        urlToolBar.setFloatable(false);
+        urlToolBar.setRollover(true);
 
-        jLabel1.setText("URL:");
-        jToolBar1.add(jLabel1);
-        jToolBar1.add(jTextField1);
+        urlLabel.setText("URL:");
+        urlToolBar.add(urlLabel);
+        urlToolBar.add(urlField);
 
-        jToggleButton1.setText("Crawl");
-        jToggleButton1.setFocusable(false);
-        jToggleButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jToggleButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        crawlToggleButton.setText("Crawl");
+        crawlToggleButton.setFocusable(false);
+        crawlToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        crawlToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        crawlToggleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                crawlToggleButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(jToggleButton1);
+        urlToolBar.add(crawlToggleButton);
 
-        jScrollPane1.setAlignmentX(0.0F);
-        jScrollPane1.setAlignmentY(0.0F);
-        jScrollPane1.setAutoscrolls(true);
+        fillerLabel.setText(" ");
+        urlToolBar.add(fillerLabel);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setEditable(false);
-        jTextArea1.setRows(5);
-        jTextArea1.setAutoscrolls(true);
-        jTextArea1.setEnabled(false);
-        jScrollPane1.setViewportView(jTextArea1);
+        outputScrollPane.setAlignmentX(0.0F);
+        outputScrollPane.setAlignmentY(0.0F);
+        outputScrollPane.setMaximumSize(new java.awt.Dimension(this.getSize()));
+        outputScrollPane.setPreferredSize(new java.awt.Dimension(this.getSize()));
 
-        jLabel2.setText("Status");
-        jXStatusBar1.add(jLabel2);
+        outputTextArea.setColumns(20);
+        outputTextArea.setEditable(false);
+        outputTextArea.setRows(5);
+        outputTextArea.setEnabled(false);
+        outputTextArea.setMaximumSize(new java.awt.Dimension(this.getSize()));
+        outputTextArea.setPreferredSize(new java.awt.Dimension(this.getSize()));
+        outputScrollPane.setViewportView(outputTextArea);
 
-        jLabel3.setText("Pending: 0");
-        jXStatusBar1.add(jLabel3);
+        statusLabel.setText("Status");
+        statusBar.add(statusLabel);
 
-        jLabel4.setText("Crawled: 0");
-        jXStatusBar1.add(jLabel4);
+        pendingLabel.setText("Pending: 0");
+        statusBar.add(pendingLabel);
 
-        jLabel5.setText("crawling");
-        jXStatusBar1.add(jLabel5);
+        crawledLabel.setText("Crawled: 0");
+        statusBar.add(crawledLabel);
+
+        crawlingLabel.setText("crawling");
+        statusBar.add(crawlingLabel);
+
+        fileMenu.setText("File");
+
+        newMenuItem.setText("New...");
+        fileMenu.add(newMenuItem);
+
+        openMenuItem.setText("Open...");
+        fileMenu.add(openMenuItem);
+
+        saveMenuItem.setText("Save...");
+        fileMenu.add(saveMenuItem);
+        fileMenu.add(fileMenuSeparator1);
+
+        closeMenuItem.setText("Close");
+        fileMenu.add(closeMenuItem);
+
+        menuBar.add(fileMenu);
+
+        jMenu2.setText("Edit");
+        menuBar.add(jMenu2);
+
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
-            .addComponent(jXStatusBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+            .addComponent(urlToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(outputScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+            .addComponent(statusBar, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(urlToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .addComponent(outputScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jXStatusBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(statusBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         setBounds((screenSize.width-477)/2, (screenSize.height-330)/2, 477, 330);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+    private void crawlToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crawlToggleButtonActionPerformed
         // Fetch the button from the event
         JToggleButton btn = (JToggleButton) evt.getSource();
 
@@ -140,21 +177,27 @@ public class Main extends javax.swing.JFrame {
 
         // If the button is selected we should run, if the button get's untoggled we should cancel
         if(btn.isSelected()){
-            try {
-                // If the pending list is empty we should add our starting point
-                if(pending.size() == 0)
-                    pending.add(new URL(jTextField1.getText()));
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            if(!urlField.getText().startsWith("http://") &&
+               !urlField.getText().startsWith("https://")) {
+                JOptionPane.showMessageDialog(rootPane, "Invalid URL\n Either there is no URL, or it doesn't start with http(s)://");
+                btn.setSelected(false);
+            } else {
+                try {
+                    // If the pending list is empty we should add our starting point
+                    if(pending.isEmpty())
+                        pending.add(new URL(urlField.getText()));
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                toggled = true;
+                c.execute();
             }
-            toggled = true;
-            c.execute();
         } else {
             c.cancel(true);
             updateStatus();
             toggled = false;
         }
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_crawlToggleButtonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -169,17 +212,26 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private static javax.swing.JLabel jLabel3;
-    private static javax.swing.JLabel jLabel4;
-    private static javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private static javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToolBar jToolBar1;
-    private org.jdesktop.swingx.JXStatusBar jXStatusBar1;
+    private javax.swing.JMenuItem closeMenuItem;
+    private javax.swing.JToggleButton crawlToggleButton;
+    private static javax.swing.JLabel crawledLabel;
+    private static javax.swing.JLabel crawlingLabel;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JPopupMenu.Separator fileMenuSeparator1;
+    private javax.swing.JLabel fillerLabel;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem newMenuItem;
+    private javax.swing.JMenuItem openMenuItem;
+    private javax.swing.JScrollPane outputScrollPane;
+    private static javax.swing.JTextArea outputTextArea;
+    private static javax.swing.JLabel pendingLabel;
+    private javax.swing.JMenuItem saveMenuItem;
+    private org.jdesktop.swingx.JXStatusBar statusBar;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JTextField urlField;
+    private javax.swing.JLabel urlLabel;
+    private javax.swing.JToolBar urlToolBar;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -234,15 +286,15 @@ public class Main extends javax.swing.JFrame {
         for(int i = 0; i < output.size();i++){
             listOutput = listOutput +"\n"+ output.get(i);
         }
-        jTextArea1.setText(listOutput);
+        outputTextArea.setText(listOutput);
     }
 
     /**
      * Update the status of the lists
      */
     public static void updateStatus(){
-        jLabel3.setText("Pending: "+pending.size());
-        jLabel4.setText("Crawled: "+crawled.size());
+        pendingLabel.setText("Pending: "+pending.size());
+        crawledLabel.setText("Crawled: "+crawled.size());
     }
 
     /**
@@ -250,6 +302,6 @@ public class Main extends javax.swing.JFrame {
      * @param current
      */
     public static void setCurrentlyCrawling(String current){
-        jLabel5.setText(current);
+        crawlingLabel.setText(current);
     }
 }
