@@ -74,7 +74,8 @@ public class Main extends javax.swing.JFrame {
         saveMenuItem = new javax.swing.JMenuItem();
         fileMenuSeparator1 = new javax.swing.JPopupMenu.Separator();
         closeMenuItem = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        toolsMenu = new javax.swing.JMenu();
+        chatUiMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,8 +142,17 @@ public class Main extends javax.swing.JFrame {
 
         menuBar.add(fileMenu);
 
-        jMenu2.setText("Edit");
-        menuBar.add(jMenu2);
+        toolsMenu.setText("Tools");
+
+        chatUiMenuItem.setText("Go to chat UI");
+        chatUiMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chatUiMenuItemActionPerformed(evt);
+            }
+        });
+        toolsMenu.add(chatUiMenuItem);
+
+        menuBar.add(toolsMenu);
 
         setJMenuBar(menuBar);
 
@@ -199,6 +209,11 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_crawlToggleButtonActionPerformed
 
+    private void chatUiMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatUiMenuItemActionPerformed
+        this.dispose();
+        ChatGUI.main(null);
+    }//GEN-LAST:event_chatUiMenuItemActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -212,6 +227,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem chatUiMenuItem;
     private javax.swing.JMenuItem closeMenuItem;
     private javax.swing.JToggleButton crawlToggleButton;
     private static javax.swing.JLabel crawledLabel;
@@ -219,7 +235,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JPopupMenu.Separator fileMenuSeparator1;
     private javax.swing.JLabel fillerLabel;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem newMenuItem;
     private javax.swing.JMenuItem openMenuItem;
@@ -229,6 +244,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveMenuItem;
     private org.jdesktop.swingx.JXStatusBar statusBar;
     private javax.swing.JLabel statusLabel;
+    private javax.swing.JMenu toolsMenu;
     private javax.swing.JTextField urlField;
     private javax.swing.JLabel urlLabel;
     private javax.swing.JToolBar urlToolBar;

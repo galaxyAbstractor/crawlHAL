@@ -7,6 +7,8 @@ package crawlhal;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 import javax.swing.SwingWorker;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,7 +25,7 @@ public class Crawler extends SwingWorker<Void, Void> {
     
     @Override
     protected Void doInBackground() throws Exception {
-        
+        Hal hal = new Hal();
         // Crawl and parse for links until there is no more pending URL's
         do {
             // Get the first URL in the pending Set
@@ -34,10 +36,34 @@ public class Crawler extends SwingWorker<Void, Void> {
             Elements links = doc.select("a[href]");
             int size = links.size();
 
+            Elements paragraphs = doc.select("p");
+
+            for (Element paragraph : paragraphs) {
+                // As I am testing this at wikipedia, I do not want long URL lists to be added
+                // Option for this will be added later
+                if(paragraph.text().contains("•")) continue;
+                if(paragraph.text().contains("·")) continue;
+                
+                hal.add(paragraph.text());
+                System.out.println("Added: "+paragraph.text());
+            }
+
             for (Element link : links) {
                 
                 String linkURL = link.attr("abs:href");
 
+                // For now, under development, I only want the bot to talk English,
+                // as I do not understand korean or japanese :\
+                // Later, some sort of option will be added to limit the crawling to a
+                // specific site
+                /*
+                if(!linkURL.startsWith("http://en.wikipedia.org/wiki")){
+                    Main.linksFound++;
+                    Main.linksTotal++;
+                    continue;
+                }
+                 
+                 */
                 // Make sure we have an URL, otherwise we are stuck here forever
                 if(linkURL.isEmpty()) continue;
 
